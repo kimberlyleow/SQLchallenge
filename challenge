@@ -1,0 +1,24 @@
+#1 SELECT COUNT(name) FROM country WHERE region='North America';
+
+#2 SELECT population, lifeexpectancy FROM country WHERE name='Argentina';
+
+#3 SELECT name, lifeexpectancy FROM country WHERE lifeexpectancy=(SELECT MAX(lifeexpectancy) FROM country) IS NOT NULL
+ORDER BY lifeexpectancy DESC LIMIT 1;
+
+#4 SELECT ci.name FROM city ci JOIN country co ON ci.id=co.capital WHERE co.name='Spain';
+
+#5 SELECT DISTINCT cola.language FROM country co JOIN countrylanguage cola ON co.code=cola.countrycode WHERE co.region='Southeast Asia';
+
+#6 SELECT * FROM city WHERE name LIKE 'F%' LIMIT 25;
+
+#7 SELECT COUNT(ci.name) FROM city ci JOIN country co ON ci.countrycode=co.code WHERE co.name='China';
+
+#8 SELECT * FROM country ORDER BY population ASC LIMIT 1;
+
+#9 SELECT COUNT(name) FROM country;
+
+#10 SELECT * FROM country ORDER BY surfacearea DESC LIMIT 10;
+
+#11 SELECT ci.name, ci.population FROM city ci JOIN country co ON ci.countrycode=co.code WHERE co.name='Japan' ORDER BY ci.population DESC LIMIT 5;
+
+#12
