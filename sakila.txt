@@ -1,0 +1,106 @@
+USE sakila;
+SHOW TABLES;
+
+#1
+SELECT * FROM actor;
+
+#2
+SELECT last_name FROM actor WHERE first_name='John';
+
+#3
+SELECT * FROM actor WHERE last_name='Neeson';
+
+#4
+SELECT * FROM actor WHERE mod (actor_id, 10) = 0;
+
+#5
+SELECT film_id, description FROM film WHERE film_id = 100;
+
+#6
+SELECT * FROM film WHERE rating='R';
+
+#7
+SELECT * FROM film WHERE rating!='R';
+
+#8
+SELECT title, length FROM film ORDER BY length ASC LIMIT 10;
+
+#9
+SELECT title, length FROM film WHERE length=(SELECT MAX(length) FROM film);
+
+#10
+SELECT * from film WHERE special_features LIKE '%Deleted Scenes%';
+
+#11
+SELECT last_name, COUNT(last_name) FROM actor 
+GROUP BY last_name 
+HAVING COUNT(last_name) = 1 
+ORDER BY last_name DESC;
+
+#12
+SELECT last_name, COUNT(last_name) FROM actor 
+GROUP BY last_name 
+HAVING COUNT(last_name) > 1 
+ORDER BY COUNT(last_name) DESC;
+
+#13
+SELECT actor.actor_id, actor.first_name, actor.last_name,
+       count(actor_id) AS film_count
+FROM actor JOIN film_actor USING (actor_id)
+GROUP BY actor_id
+ORDER BY film_count DESC
+LIMIT 1;
+
+#14
+SELECT rental_duration FROM film WHERE film_id = 1;
+SELECT rental_id FROM rental ORDER BY rental_id DESC LIMIT 1;
+SELECT rental_date,
+       rental_date + interval
+                   (SELECT rental_duration FROM film WHERE film_id = 1) day
+                   as due_date
+FROM rental
+WHERE rental_id = (SELECT rental_id FROM rental ORDER BY rental_id DESC LIMIT 1);
+
+#15 
+SELECT AVG(length) FROM film;
+
+#16
+SELECT category.name, AVG(length)
+FROM film JOIN film_category USING (film_id) JOIN category USING (category_id)
+GROUP BY category.name
+ORDER BY(length) DESC;
+
+#17
+SELECT * FROM film_text WHERE description LIKE '%Robot%';
+
+#18
+SHOW TABLES;
+SELECT COUNT(release_year) FROM film WHERE release_year=2010;
+
+#19
+SELECT title, category FROM film_list WHERE category='Horror';
+
+#20
+SELECT name FROM staff_list WHERE ID=2;
+
+#21
+SELECT title FROM film_list WHERE actors LIKE '%Fred Costner%';
+
+#22
+SELECT COUNT(country) FROM country;
+
+#23
+SELECT * FROM language ORDER BY name DESC;
+
+#24
+SELECT first_name, last_name FROM actor WHERE last_name LIKE '%son' ORDER BY first_name DESC;
+
+#25
+SHOW TABLES;
+SELECT * FROM category;
+SELECT category.name,
+       count(name) AS category_count
+FROM category JOIN film_category USING (category_id)
+GROUP BY category_id
+ORDER BY category_count DESC
+LIMIT 1;
